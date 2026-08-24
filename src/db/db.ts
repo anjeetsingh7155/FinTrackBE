@@ -1,16 +1,5 @@
 import mongoose, { Schema, Model, Types, model } from "mongoose";
 import { expenseCategories } from "../types";
-import dotenv from "dotenv";
-import dns from "dns";
-
-dotenv.config();
-
-try {
-  dns.setDefaultResultOrder("ipv4first");
-  dns.setServers(["8.8.8.8", "1.1.1.1"]);
-} catch (e) {}
-
-const { databaseURL } = process.env;
 
 const objectId = Types.ObjectId;
 
@@ -34,9 +23,3 @@ const expenseSchema = new Schema({
 //exported models
 export const userModel = mongoose.model("users", userSchema);
 export const expenseModel = mongoose.model("expenses", expenseSchema);
-
-export const databaseConnection = () => {
-  return new Promise((resolve, reject) => {
-    mongoose.connect(databaseURL as string).then(resolve).catch(reject);
-  });
-};

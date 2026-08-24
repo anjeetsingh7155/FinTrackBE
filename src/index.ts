@@ -1,17 +1,22 @@
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes";
 import expenseRoutes from "./routes/expenseRoutes";
 import profileRoutes from "./routes/profileRoutes";
 import mongoose from "mongoose";
 
+const dotenv = require("dotenv");
 dotenv.config();
+const { databaseURL, userJWTpass } = process.env;
+
+const dns = require("dns");
+try {
+  dns.setDefaultResultOrder("ipv4first");
+  dns.setServers(["8.8.8.8", "1.1.1.1"]);
+} catch (e) {}
 
 const port = process.env.PORT || 5000;
 const app = express();
-
-const databaseURL = process.env.databaseURL
 
 const databaseConnection = () => {
   return new Promise((resolve, reject) => {
@@ -40,7 +45,7 @@ app.use(express.json());
 
 app.get("/", (req, res) => {
   res.json({
-    message: "FinTrack Backend Running",
+    message: "FinTrack Backend Running 🚀",
   });
 });
 
