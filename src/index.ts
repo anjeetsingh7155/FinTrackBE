@@ -26,7 +26,10 @@ databaseConnection()
     console.log(`an error occured ${e}`);
   });
 
-app.use(cors());
+app.use(cors({
+  origin: "https://fin-track-pi-six.vercel.app/",
+  credentials : true
+}));
 app.use(express.json());
 
 app.get("/", (req, res) => {
