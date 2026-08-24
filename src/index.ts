@@ -26,21 +26,32 @@ databaseConnection()
     console.log(`an error occured ${e}`);
   });
 
-app.use(cors({
-  origin: "https://fin-track-pi-six.vercel.app/",
-  credentials : true
-}));
+app.use(
+  cors({
+    origin: [
+      "https://fin-track-pi-six.vercel.app",
+      "http://localhost:5173",
+      "http://localhost:3000",
+    ],
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 app.get("/", (req, res) => {
   res.json({
-    message: "FinTrack Backend Running ",
+    message: "FinTrack Backend Running",
   });
 });
 
 app.use("/api/auth", authRoutes);
+app.use("/auth", authRoutes);
+
 app.use("/api/expenses", expenseRoutes);
+app.use("/expenses", expenseRoutes);
+
 app.use("/api/profile", profileRoutes);
+app.use("/profile", profileRoutes);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
